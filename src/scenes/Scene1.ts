@@ -10,10 +10,15 @@ export default class Scene1 extends Phaser.Scene {
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
     private portals?: Phaser.Physics.Arcade.StaticGroup;
 
-    private gameOver = false;
+    private score = 0;
+    private scoreText?: Phaser.GameObjects.Text;
 
     constructor() {
         super({ key: "Scene1" });
+    }
+
+    init(data: { score: number }) {
+        this.score = data.score;
     }
 
     create() {
@@ -107,13 +112,21 @@ export default class Scene1 extends Phaser.Scene {
             undefined,
             this
         );
+
+        this.scoreText = this.add.text(16, 16, `Score: ${this.score}`, {
+            fontSize: "32px",
+            color: "#000",
+        });
     }
 
     private handleEnterPortal(player: Collidable, portal: Collidable) {
         const p = portal as Phaser.Physics.Arcade.Image;
         p.disableBody(true, true);
 
-        this.scene.start(p.getData("scene"));
+        this.score += 1;
+        this.scoreText?.setText(`Score: ${this.score}`);
+
+        this.scene.start(p.getData("scene"), { score: this.score });
     }
 
     update() {
