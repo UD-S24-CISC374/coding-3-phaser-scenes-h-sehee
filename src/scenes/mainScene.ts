@@ -112,10 +112,15 @@ export default class MainScene extends Phaser.Scene {
             this
         );
 
-        this.scoreText = this.add.text(16, 16, `Score: ${this.score}`, {
-            fontSize: "32px",
-            color: "#000",
-        });
+        this.scoreText = this.add.text(
+            16,
+            16,
+            `You passed ${this.score} portals!`,
+            {
+                fontSize: "32px",
+                color: "#000",
+            }
+        );
     }
 
     private handleEnterPortal(player: Collidable, portal: Collidable) {
@@ -123,7 +128,7 @@ export default class MainScene extends Phaser.Scene {
         p.disableBody(true, true);
 
         this.score += 1;
-        this.scoreText?.setText(`Score: ${this.score}`);
+        this.scoreText?.setText(`You passed ${this.score} portals!`);
 
         this.scene.start(p.getData("scene"), { score: this.score });
     }
