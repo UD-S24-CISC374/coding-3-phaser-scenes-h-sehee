@@ -4,7 +4,7 @@ export type Collidable =
     | Phaser.Types.Physics.Arcade.GameObjectWithBody
     | Phaser.Tilemaps.Tile;
 
-export default class MainScene extends Phaser.Scene {
+export default class Scene1 extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private player?: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -14,7 +14,7 @@ export default class MainScene extends Phaser.Scene {
     private scoreText?: Phaser.GameObjects.Text;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "Scene1" });
     }
 
     init(data: { score: number }) {
@@ -31,7 +31,7 @@ export default class MainScene extends Phaser.Scene {
             })
             .setOrigin(1, 0);
 
-        this.add.image(400, 300, "sky");
+        this.add.image(400, 300, "sky1");
 
         this.platforms = this.physics.add.staticGroup();
         const ground = this.platforms.create(
@@ -46,7 +46,7 @@ export default class MainScene extends Phaser.Scene {
         this.platforms.create(50, 250, "ground");
         this.platforms.create(750, 220, "ground");
 
-        this.player = this.physics.add.sprite(400, 480, "dude");
+        this.player = this.physics.add.sprite(750, 330, "dude");
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
@@ -81,11 +81,6 @@ export default class MainScene extends Phaser.Scene {
         this.cursors = this.input.keyboard?.createCursorKeys();
 
         this.portals = this.physics.add.staticGroup();
-        const portal1 = this.portals.create(
-            750,
-            350,
-            "p1"
-        ) as Phaser.Physics.Arcade.Sprite;
 
         const portal2 = this.portals.create(
             50,
@@ -99,9 +94,15 @@ export default class MainScene extends Phaser.Scene {
             "p3"
         ) as Phaser.Physics.Arcade.Sprite;
 
-        portal1.setData("scene", "Scene1");
+        const portal4 = this.portals.create(
+            400,
+            500,
+            "p4"
+        ) as Phaser.Physics.Arcade.Sprite;
+
         portal2.setData("scene", "Scene2");
         portal3.setData("scene", "Scene3");
+        portal4.setData("scene", "MainScene");
 
         this.physics.add.collider(this.portals, this.platforms);
         this.physics.add.overlap(

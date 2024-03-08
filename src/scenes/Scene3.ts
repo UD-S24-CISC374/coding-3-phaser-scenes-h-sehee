@@ -4,7 +4,7 @@ export type Collidable =
     | Phaser.Types.Physics.Arcade.GameObjectWithBody
     | Phaser.Tilemaps.Tile;
 
-export default class MainScene extends Phaser.Scene {
+export default class Scene3 extends Phaser.Scene {
     private platforms?: Phaser.Physics.Arcade.StaticGroup;
     private player?: Phaser.Physics.Arcade.Sprite;
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -14,7 +14,7 @@ export default class MainScene extends Phaser.Scene {
     private scoreText?: Phaser.GameObjects.Text;
 
     constructor() {
-        super({ key: "MainScene" });
+        super({ key: "Scene3" });
     }
 
     init(data: { score: number }) {
@@ -31,7 +31,7 @@ export default class MainScene extends Phaser.Scene {
             })
             .setOrigin(1, 0);
 
-        this.add.image(400, 300, "sky");
+        this.add.image(400, 300, "sky3");
 
         this.platforms = this.physics.add.staticGroup();
         const ground = this.platforms.create(
@@ -46,7 +46,7 @@ export default class MainScene extends Phaser.Scene {
         this.platforms.create(50, 250, "ground");
         this.platforms.create(750, 220, "ground");
 
-        this.player = this.physics.add.sprite(400, 480, "dude");
+        this.player = this.physics.add.sprite(750, 150, "dude");
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
@@ -93,15 +93,15 @@ export default class MainScene extends Phaser.Scene {
             "p2"
         ) as Phaser.Physics.Arcade.Sprite;
 
-        const portal3 = this.portals.create(
-            750,
-            170,
-            "p3"
+        const portal4 = this.portals.create(
+            400,
+            500,
+            "p4"
         ) as Phaser.Physics.Arcade.Sprite;
 
         portal1.setData("scene", "Scene1");
         portal2.setData("scene", "Scene2");
-        portal3.setData("scene", "Scene3");
+        portal4.setData("scene", "MainScene");
 
         this.physics.add.collider(this.portals, this.platforms);
         this.physics.add.overlap(
